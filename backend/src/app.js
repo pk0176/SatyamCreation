@@ -26,8 +26,10 @@ app.use(express.static("public"));
 
 import productRouter from "./routes/product.routes.js";
 import categoryRouter from "./routes/category.routes.js";
+import heroBannerRouter from "./routes/heroBanner.routes.js";
 
 app.use("/v1/api/product", productRouter);
 app.use("/v1/api/category", categoryRouter);
+app.use("/v1/api/banner", heroBannerRouter);
 
 export default app;
