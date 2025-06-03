@@ -64,8 +64,8 @@ Content-Type: multipart/form-data
     "contactNumber": "9876543210",
     "email": "contact@example.com",
     "isTrending": true,
-    "createdAt": "2023-06-17T12:38:06.693Z",
-    "updatedAt": "2023-06-17T12:38:06.693Z",
+    "createdAt": "2025-06-02T12:38:06.693Z",
+    "updatedAt": "2025-06-02T12:38:06.693Z",
     "__v": 0
   },
   "message": "Product created successfully"
@@ -136,8 +136,8 @@ Content-Type: multipart/form-data
     "contactNumber": "9876543210",
     "email": "contact@example.com",
     "isTrending": false,
-    "createdAt": "2023-06-17T12:38:06.693Z",
-    "updatedAt": "2023-06-17T12:45:22.123Z",
+    "createdAt": "2025-06-02T12:38:06.693Z",
+    "updatedAt": "2025-06-02T12:45:22.123Z",
     "__v": 0
   },
   "message": "Product updated successfully"
@@ -186,8 +186,8 @@ GET http://localhost:3000/v1/api/product/all
       "contactNumber": "9876543210",
       "email": "contact@example.com",
       "isTrending": false,
-      "createdAt": "2023-06-17T12:38:06.693Z",
-      "updatedAt": "2023-06-17T12:45:22.123Z"
+      "createdAt": "2025-06-02T12:38:06.693Z",
+      "updatedAt": "2025-06-02T12:45:22.123Z"
     }
     // More products...
   ],
@@ -239,8 +239,8 @@ GET http://localhost:3000/v1/api/product/category/648d7f7ec64d9548a9b9778a
       "contactNumber": "9876543210",
       "email": "contact@example.com",
       "isTrending": false,
-      "createdAt": "2023-06-17T12:38:06.693Z",
-      "updatedAt": "2023-06-17T12:45:22.123Z"
+      "createdAt": "2025-06-02T12:38:06.693Z",
+      "updatedAt": "2025-06-02T12:45:22.123Z"
     }
     // More products in this category...
   ],
@@ -287,8 +287,8 @@ GET http://localhost:3000/v1/api/product/trending
       "contactNumber": "9876543210",
       "email": "contact@example.com",
       "isTrending": true,
-      "createdAt": "2023-06-17T12:38:06.693Z",
-      "updatedAt": "2023-06-17T12:45:22.123Z"
+      "createdAt": "2025-06-02T12:38:06.693Z",
+      "updatedAt": "2025-06-02T12:45:22.123Z"
     }
     // More trending products...
   ],
@@ -374,8 +374,8 @@ Content-Type: multipart/form-data
     "imageURL": "https://res.cloudinary.com/example/image/upload/v1686938286/categories/furniture.jpg",
     "isFeature": true,
     "productCount": 0,
-    "createdAt": "2023-06-17T12:30:06.693Z",
-    "updatedAt": "2023-06-17T12:30:06.693Z",
+    "createdAt": "2025-06-02T12:30:06.693Z",
+    "updatedAt": "2025-06-02T12:30:06.693Z",
     "__v": 0
   },
   "message": "Category created successfully"
@@ -412,8 +412,8 @@ GET http://localhost:3000/v1/api/category/all
       "imageURL": "https://res.cloudinary.com/example/image/upload/v1686938286/categories/furniture.jpg",
       "isFeature": true,
       "productCount": 0,
-      "createdAt": "2023-06-17T12:30:06.693Z",
-      "updatedAt": "2023-06-17T12:30:06.693Z"
+      "createdAt": "2025-06-02T12:30:06.693Z",
+      "updatedAt": "2025-06-02T12:30:06.693Z"
     },
     {
       "_id": "648d7f7ec64d9548a9b9778b",
@@ -421,8 +421,8 @@ GET http://localhost:3000/v1/api/category/all
       "imageURL": "https://res.cloudinary.com/example/image/upload/v1686938286/categories/home-decor.jpg",
       "isFeature": true,
       "productCount": 0,
-      "createdAt": "2023-06-17T12:31:06.693Z",
-      "updatedAt": "2023-06-17T12:31:06.693Z"
+      "createdAt": "2025-06-02T12:31:06.693Z",
+      "updatedAt": "2025-06-02T12:31:06.693Z"
     }
     // More categories...
   ],
@@ -462,8 +462,8 @@ GET http://localhost:3000/v1/api/category/648d7f7ec64d9548a9b9778a
     "imageURL": "https://res.cloudinary.com/example/image/upload/v1686938286/categories/furniture.jpg",
     "isFeature": true,
     "productCount": 0,
-    "createdAt": "2023-06-17T12:30:06.693Z",
-    "updatedAt": "2023-06-17T12:30:06.693Z"
+    "createdAt": "2025-06-02T12:30:06.693Z",
+    "updatedAt": "2025-06-02T12:30:06.693Z"
   },
   "message": "Category found"
 }
@@ -497,8 +497,8 @@ GET http://localhost:3000/v1/api/category/featured
       "imageURL": "https://res.cloudinary.com/example/image/upload/v1686938286/categories/furniture.jpg",
       "isFeature": true,
       "productCount": 0,
-      "createdAt": "2023-06-17T12:30:06.693Z",
-      "updatedAt": "2023-06-17T12:30:06.693Z"
+      "createdAt": "2025-06-02T12:30:06.693Z",
+      "updatedAt": "2025-06-02T12:30:06.693Z"
     },
     {
       "_id": "648d7f7ec64d9548a9b9778b",
@@ -506,8 +506,8 @@ GET http://localhost:3000/v1/api/category/featured
       "imageURL": "https://res.cloudinary.com/example/image/upload/v1686938286/categories/home-decor.jpg",
       "isFeature": true,
       "productCount": 0,
-      "createdAt": "2023-06-17T12:31:06.693Z",
-      "updatedAt": "2023-06-17T12:31:06.693Z"
+      "createdAt": "2025-06-02T12:31:06.693Z",
+      "updatedAt": "2025-06-02T12:31:06.693Z"
     }
     // More featured categories...
   ],
@@ -561,8 +561,8 @@ Content-Type: multipart/form-data
     "imageURL": "https://res.cloudinary.com/example/image/upload/v1686940286/categories/furniture-updated.jpg",
     "isFeature": false,
     "productCount": 0,
-    "createdAt": "2023-06-17T12:30:06.693Z",
-    "updatedAt": "2023-06-17T13:11:26.123Z"
+    "createdAt": "2025-06-02T12:30:06.693Z",
+    "updatedAt": "2025-06-02T13:11:26.123Z"
   },
   "message": "Category updated successfully"
 }
@@ -616,8 +616,8 @@ Content-Type: multipart/form-data
     "description": "Check out our latest summer collection",
     "bannerImageURL": "https://res.cloudinary.com/example/image/upload/v1686938286/banners/summer.jpg",
     "isActive": true,
-    "createdAt": "2023-06-17T14:38:06.693Z",
-    "updatedAt": "2023-06-17T14:38:06.693Z",
+    "createdAt": "2025-06-02T14:38:06.693Z",
+    "updatedAt": "2025-06-02T14:38:06.693Z",
     "__v": 0
   },
   "message": "Hero Banner created successfully"
@@ -653,8 +653,8 @@ GET http://localhost:3000/v1/api/herobanner/active
       "description": "Check out our latest summer collection",
       "bannerImageURL": "https://res.cloudinary.com/example/image/upload/v1686938286/banners/summer.jpg",
       "isActive": true,
-      "createdAt": "2023-06-17T14:38:06.693Z",
-      "updatedAt": "2023-06-17T14:38:06.693Z"
+      "createdAt": "2025-06-02T14:38:06.693Z",
+      "updatedAt": "2025-06-02T14:38:06.693Z"
     }
     // More active banners...
   ],
