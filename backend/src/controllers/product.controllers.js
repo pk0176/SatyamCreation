@@ -35,10 +35,11 @@ const createProduct = asyncHandler(async (req, res) => {
     throw new ApiError(404, "Category not found");
   }
 
-  const imageFiles = req.files?.images;
-  if (!imageFiles || imageFiles.length === 0) {
+  if (!req.files || req.files.length === 0) {
     throw new ApiError(400, "At least one product image is required");
   }
+
+  const imageFiles = req.files;
 
   if (imageFiles.length > 5) {
     throw new ApiError(400, "Maximum 5 images are allowed");
@@ -87,23 +88,35 @@ const updateProduct = asyncHandler(async (req, res) => {
   } = req.body;
 
   const product = await Product.findById(id);
-
   if (!product) {
     throw new ApiError(404, "Product not found");
   }
 
+  // Validate category if provided
+  if (category && !mongoose.Types.ObjectId.isValid(category)) {
+    throw new ApiError(400, "Invalid category ID");
+  }
+
+  if (category) {
+    const categoryExists = await Category.findById(category);
+    if (!categoryExists) {
+      throw new ApiError(404, "Category not found");
+    }
+  }
+
+  // Handle image updates
   let newImageURLs = [...product.imageURLs];
-  if (req.files?.images) {
-    const imageFiles = req.files.images;
-    if (imageFiles.length > 5) {
+  if (req.files && req.files.length > 0) {
+    if (req.files.length > 5) {
       throw new ApiError(400, "Maximum 5 images are allowed");
     }
-    const imageUploadPromises = imageFiles.map((file) =>
+    const imageUploadPromises = req.files.map((file) =>
       uploadOnCloudinary(file.path)
     );
     const uploadedImages = await Promise.all(imageUploadPromises);
     newImageURLs = uploadedImages.map((img) => img.url);
   }
+
   const updatedProduct = await Product.findByIdAndUpdate(
     id,
     {
@@ -119,10 +132,13 @@ const updateProduct = asyncHandler(async (req, res) => {
         email: email || product.email,
       },
     },
-    {
-      new: true,
-    }
-  );
+    { new: true }
+  ).populate("category", "categoryType");
+
+  if (!updatedProduct) {
+    throw new ApiError(500, "Error while updating product");
+  }
+
   return res
     .status(200)
     .json(new ApiResponse(200, updatedProduct, "Product updated successfully"));
@@ -164,7 +180,11 @@ const deleteProduct = asyncHandler(async (req, res) => {
     throw new ApiError(404, "Product not found");
   }
 
-  await product.remove(); // This will trigger the pre('remove') middleware
+  await product.deleteOne();
+
+  await Category.findByIdAndUpdate(product.category, {
+    $inc: { productCount: -1 },
+  });
 
   return res
     .status(200)

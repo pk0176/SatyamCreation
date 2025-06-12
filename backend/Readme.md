@@ -336,7 +336,7 @@ DELETE http://localhost:3000/v1/api/product/delete/648d8f9ec64d9548a9b9778c
 
 ### Create Category
 
-- **Endpoint**: `POST /category/create`
+- **Endpoint**: `POST /category/createCategories`
 - **Content-Type**: `multipart/form-data`
 - **Description**: Creates a new category
 - **Authorization**: None
@@ -352,7 +352,7 @@ DELETE http://localhost:3000/v1/api/product/delete/648d8f9ec64d9548a9b9778c
 **Example Request**:
 
 ```
-POST http://localhost:3000/v1/api/category/create
+POST http://localhost:3000/v1/api/category/createCategories
 Content-Type: multipart/form-data
 
 {
@@ -390,14 +390,14 @@ Content-Type: multipart/form-data
 
 ### Get All Categories
 
-- **Endpoint**: `GET /category/all`
+- **Endpoint**: `GET /category/getAllCategories`
 - **Description**: Retrieves all categories
 - **Authorization**: None
 
 **Example Request**:
 
 ```
-GET http://localhost:3000/v1/api/category/all
+GET http://localhost:3000/v1/api/category/getAllCategories
 ```
 
 **Success Response (200 OK)**:
@@ -436,7 +436,7 @@ GET http://localhost:3000/v1/api/category/all
 
 ### Get Category by ID
 
-- **Endpoint**: `GET /category/:id`
+- **Endpoint**: `GET /category/getCategoryById/:id`
 - **Description**: Retrieves a category by its ID
 - **Authorization**: None
 
@@ -448,7 +448,7 @@ GET http://localhost:3000/v1/api/category/all
 **Example Request**:
 
 ```
-GET http://localhost:3000/v1/api/category/648d7f7ec64d9548a9b9778a
+GET http://localhost:3000/v1/api/category/getCategoryById/648d7f7ec64d9548a9b9778a
 ```
 
 **Success Response (200 OK)**:
@@ -475,14 +475,14 @@ GET http://localhost:3000/v1/api/category/648d7f7ec64d9548a9b9778a
 
 ### Get Featured Categories
 
-- **Endpoint**: `GET /category/featured`
+- **Endpoint**: `GET /category/getFeaturedCategories`
 - **Description**: Retrieves all featured categories
 - **Authorization**: None
 
 **Example Request**:
 
 ```
-GET http://localhost:3000/v1/api/category/featured
+GET http://localhost:3000/v1/api/category/getFeaturedCategories
 ```
 
 **Success Response (200 OK)**:
@@ -521,7 +521,7 @@ GET http://localhost:3000/v1/api/category/featured
 
 ### Update Category
 
-- **Endpoint**: `PATCH /category/update/:id`
+- **Endpoint**: `PATCH /category/updateCategory/:id`
 - **Content-Type**: `multipart/form-data`
 - **Description**: Updates a category
 - **Authorization**: None
@@ -541,7 +541,7 @@ GET http://localhost:3000/v1/api/category/featured
 **Example Request**:
 
 ```
-PATCH http://localhost:3000/v1/api/category/update/648d7f7ec64d9548a9b9778a
+PATCH http://localhost:3000/v1/api/category/updateCategory/648d7f7ec64d9548a9b9778a
 Content-Type: multipart/form-data
 
 {
