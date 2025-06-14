@@ -19,11 +19,13 @@ const createHeroBanner = asyncHandler(async (req, res) => {
   }
 
   // Handle image uploads
-  const imageFiles = req.files?.images;
-  if (!imageFiles || imageFiles.length === 0) {
-    throw new ApiError(400, "At least one image is required");
+  if (!req.files || req.files.length === 0) {
+    throw new ApiError(400, "At least one product image is required");
   }
-
+  const imageFiles = req.files;
+  if (imageFiles.length > 4) {
+    throw new ApiError(400, "Maximum 4 images are allowed");
+  }
   const imageUploadPromises = imageFiles.map((file) =>
     uploadOnCloudinary(file.path)
   );
@@ -65,10 +67,13 @@ const updateHeroBanner = asyncHandler(async (req, res) => {
 
   // Handle image updates if provided
   let imageURLs = [...banner.images];
-  if (req.files?.images) {
-    const imageUploadPromises = req.files.images.map((file) =>
-      uploadOnCloudinary(file.path)
-    );
+  if (req.files && req.files.length > 0) {
+    if (req.files.length > 4) {
+      throw new ApiError(400, "Maximum 5 images are allowed");
+    }
+    const imageUploadPromises = req.fiels.map((file) => {
+      uploadOnCloudinary(file.path);
+    });
     const uploadedImages = await Promise.all(imageUploadPromises);
     imageURLs = uploadedImages.map((img) => img.url);
   }
@@ -127,9 +132,28 @@ const getHeroBannerByTitle = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, banner, "Hero banner fetched successfully"));
 });
 
+const getAllActiveBanner = asyncHandler(async (req, res) => {
+  const allActiveBanner = HeroBanner.find({ isActive: true }).sort({
+    createdAt: -1,
+  });
+  if (!allActiveBanner) {
+    throw new ApiError(404, "There is no active banner");
+  }
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        allActiveBanner,
+        "All active banner fetched successfully"
+      )
+    );
+});
+
 export {
   createHeroBanner,
   updateHeroBanner,
   deleteHeroBanner,
   getHeroBannerByTitle,
+  getAllActiveBanner,
 };

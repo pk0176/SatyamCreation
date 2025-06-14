@@ -5,6 +5,7 @@ import {
   updateHeroBanner,
   deleteHeroBanner,
   getHeroBannerByTitle,
+  getAllActiveBanner,
 } from "../controllers/heroBanner.controllers.js";
 
 const router = Router();
@@ -17,4 +18,5 @@ router.route("/delete/:id").delete(deleteHeroBanner);
 
 router.route("/title/:title").get(getHeroBannerByTitle);
 
+router.route("/active").get(getAllActiveBanner);
 export default router;

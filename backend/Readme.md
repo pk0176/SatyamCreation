@@ -666,6 +666,153 @@ GET http://localhost:3000/v1/api/herobanner/active
 
 - `500 Internal Server Error`: Error while fetching active hero banners
 
+### Update Hero Banner
+
+- **Endpoint**: `PATCH /herobanner/update/:id`
+- **Content-Type**: `multipart/form-data`
+- **Description**: Updates an existing hero banner
+- **Authorization**: None
+
+**URL Parameters**:
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| id | String | Hero Banner ID |
+
+**Request Body** (all fields optional):
+| Field | Type | Description |
+|-------|------|-------------|
+| title | String | Banner title |
+| subtitle | String | Banner subtitle |
+| description | String | Banner description |
+| primaryCTA | Object | Primary call-to-action { text: String, link: String } |
+| secondaryCTA | Object | Secondary call-to-action { text: String, link: String } |
+| images | Files | Up to 4 banner images |
+| isActive | Boolean | Whether the banner is active |
+
+**Example Request**:
+
+```
+PATCH http://localhost:3000/v1/api/herobanner/update/648d9f9ec64d9548a9b9778e
+Content-Type: multipart/form-data
+
+{
+  "title": "Updated Summer Collection",
+  "isActive": false,
+  "primaryCTA": {
+    "text": "Shop Now",
+    "link": "/summer-collection"
+  },
+  "images": [file1, file2]
+}
+```
+
+**Success Response (200 OK)**:
+
+```json
+{
+  "statusCode": 200,
+  "data": {
+    "_id": "648d9f9ec64d9548a9b9778e",
+    "title": "Updated Summer Collection",
+    "subtitle": "Existing subtitle",
+    "description": "Existing description",
+    "primaryCTA": {
+      "text": "Shop Now",
+      "link": "/summer-collection"
+    },
+    "images": [
+      "https://res.cloudinary.com/example/image/upload/v1686938286/banners/summer1.jpg",
+      "https://res.cloudinary.com/example/image/upload/v1686938287/banners/summer2.jpg"
+    ],
+    "isActive": false,
+    "createdAt": "2025-06-02T14:38:06.693Z",
+    "updatedAt": "2025-06-02T15:45:22.123Z"
+  },
+  "message": "Hero banner updated successfully"
+}
+```
+
+### Delete Hero Banner
+
+- **Endpoint**: `DELETE /herobanner/delete/:id`
+- **Description**: Deletes a hero banner
+- **Authorization**: None
+
+**URL Parameters**:
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| id | String | Hero Banner ID |
+
+**Example Request**:
+
+```
+DELETE http://localhost:3000/v1/api/herobanner/delete/648d9f9ec64d9548a9b9778e
+```
+
+**Success Response (200 OK)**:
+
+```json
+{
+  "statusCode": 200,
+  "data": {},
+  "message": "Hero banner deleted successfully"
+}
+```
+
+### Get Hero Banner by Title
+
+- **Endpoint**: `GET /herobanner/title/:title`
+- **Description**: Retrieves a hero banner by its title
+- **Authorization**: None
+
+**URL Parameters**:
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| title | String | Banner title (case-insensitive) |
+
+**Example Request**:
+
+```
+GET http://localhost:3000/v1/api/herobanner/title/summer
+```
+
+**Success Response (200 OK)**:
+
+```json
+{
+  "statusCode": 200,
+  "data": {
+    "_id": "648d9f9ec64d9548a9b9778e",
+    "title": "Summer Collection",
+    "subtitle": "Hot Deals for Summer",
+    "description": "Check out our latest summer collection",
+    "primaryCTA": {
+      "text": "Shop Now",
+      "link": "/summer-collection"
+    },
+    "secondaryCTA": {
+      "text": "Learn More",
+      "link": "/about-summer-collection"
+    },
+    "images": [
+      "https://res.cloudinary.com/example/image/upload/v1686938286/banners/summer1.jpg",
+      "https://res.cloudinary.com/example/image/upload/v1686938287/banners/summer2.jpg"
+    ],
+    "isActive": true,
+    "createdAt": "2025-06-02T14:38:06.693Z",
+    "updatedAt": "2025-06-02T14:38:06.693Z"
+  },
+  "message": "Hero banner fetched successfully"
+}
+```
+
+**Error Responses for All Hero Banner Endpoints**:
+
+- `400 Bad Request`: Invalid or missing required parameters
+- `404 Not Found`: Hero banner not found
+- `409 Conflict`: Banner with this title already exists
+- `500 Internal Server Error`: Server-side error
+
 ## Common Error Response Format
 
 All error responses follow this format:
@@ -684,26 +831,3 @@ Common error status codes:
 - `404 Not Found`: Requested resource not found
 - `409 Conflict`: Resource already exists
 - `500 Internal Server Error`: Server-side error
-
-## Notes for Developers
-
-### Authentication
-
-- Currently, the API does not require authentication
-- Authentication will be implemented in future versions
-
-### Rate Limiting
-
-- No rate limiting is currently implemented
-- Consider implementing rate limiting for production use
-
-### Media Upload
-
-- Image uploads are handled via Cloudinary
-- Maximum file size for uploads: 16MB
-- Supported image formats: JPEG, PNG, WebP
-
-### Pagination
-
-- Currently, the API doesn't support pagination
-- Will be implemented in future updates

@@ -30,6 +30,6 @@ import heroBannerRouter from "./routes/heroBanner.routes.js";
 
 app.use("/v1/api/product", productRouter);
 app.use("/v1/api/category", categoryRouter);
-app.use("/v1/api/banner", heroBannerRouter);
+app.use("/v1/api/herobanner", heroBannerRouter);
 
 export default app;
