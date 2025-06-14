@@ -69,9 +69,9 @@ const updateHeroBanner = asyncHandler(async (req, res) => {
   let imageURLs = [...banner.images];
   if (req.files && req.files.length > 0) {
     if (req.files.length > 4) {
-      throw new ApiError(400, "Maximum 5 images are allowed");
+      throw new ApiError(400, "Maximum 4 images are allowed");
     }
-    const imageUploadPromises = req.fiels.map((file) => {
+    const imageUploadPromises = req.files.map((file) => {
       uploadOnCloudinary(file.path);
     });
     const uploadedImages = await Promise.all(imageUploadPromises);
@@ -133,7 +133,7 @@ const getHeroBannerByTitle = asyncHandler(async (req, res) => {
 });
 
 const getAllActiveBanner = asyncHandler(async (req, res) => {
-  const allActiveBanner = HeroBanner.find({ isActive: true }).sort({
+  const allActiveBanner = await HeroBanner.find({ isActive: true }).sort({
     createdAt: -1,
   });
   if (!allActiveBanner) {
