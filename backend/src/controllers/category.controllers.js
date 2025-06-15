@@ -2,7 +2,7 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import Category from "../models/category.model.js";
-import { uploadOnCloudinary } from "../utils/cloudinary.js";
+import { deleteOnCloudinary, uploadOnCloudinary } from "../utils/cloudinary.js";
 
 //creating category
 const createCategory = asyncHandler(async (req, res) => {
@@ -112,6 +112,7 @@ const updateCategory = asyncHandler(async (req, res) => {
     const uploadedImage = await uploadOnCloudinary(imageUrlLocalPath);
     if (uploadedImage) {
       imageURL = uploadedImage.url;
+      await deleteOnCloudinary(category.imageURL);
     }
   }
 

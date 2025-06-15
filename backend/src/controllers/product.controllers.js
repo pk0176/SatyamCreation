@@ -1,7 +1,7 @@
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
-import { uploadOnCloudinary } from "../utils/cloudinary.js";
+import { deleteOnCloudinary, uploadOnCloudinary } from "../utils/cloudinary.js";
 import Product from "../models/product.model.js";
 import mongoose from "mongoose";
 import Category from "../models/category.model.js";
@@ -50,6 +50,7 @@ const createProduct = asyncHandler(async (req, res) => {
     uploadOnCloudinary(file.path)
   );
   const uploadedImages = await Promise.all(imageUploadPromises);
+  console.log("uploaded images", uploadedImages);
   const imageURLs = uploadedImages.map((img) => img.url);
 
   const product = await Product.create({
@@ -114,10 +115,20 @@ const updateProduct = asyncHandler(async (req, res) => {
         `Maximum ${MAX_PRODUCT_IMAGES} images are allowed`
       );
     }
+
     const imageUploadPromises = req.files.map((file) =>
       uploadOnCloudinary(file.path)
     );
     const uploadedImages = await Promise.all(imageUploadPromises);
+
+    //delete previous image
+
+    const deleteImagePromises = newImageURLs.map((url) =>
+      deleteOnCloudinary(url)
+    );
+
+    await Promise.all(deleteImagePromises);
+
     newImageURLs = uploadedImages.map((img) => img.url);
   }
 
@@ -183,7 +194,10 @@ const deleteProduct = asyncHandler(async (req, res) => {
   if (!product) {
     throw new ApiError(404, "Product not found");
   }
+  const images = [...product.imageURLs];
+  const deleteImagePromises = images.map((url) => deleteOnCloudinary(url));
 
+  await Promise.all(deleteImagePromises);
   await product.deleteOne();
 
   await Category.findByIdAndUpdate(product.category, {

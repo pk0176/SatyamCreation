@@ -1,7 +1,7 @@
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
-import { uploadOnCloudinary } from "../utils/cloudinary.js";
+import { deleteOnCloudinary, uploadOnCloudinary } from "../utils/cloudinary.js";
 import HeroBanner from "../models/heroBanner.model.js";
 import { MAX_HEROBANNER_IMAGES } from "../constant.js";
 
@@ -82,6 +82,10 @@ const updateHeroBanner = asyncHandler(async (req, res) => {
       uploadOnCloudinary(file.path);
     });
     const uploadedImages = await Promise.all(imageUploadPromises);
+
+    const deleteImagePromises = imageURLs.map((url) => deleteOnCloudinary(url));
+    await Promise.all(deleteImagePromises);
+
     imageURLs = uploadedImages.map((img) => img.url);
   }
 
@@ -112,6 +116,13 @@ const deleteHeroBanner = asyncHandler(async (req, res) => {
   const { id } = req.params;
 
   const banner = await HeroBanner.findById(id);
+
+  const ImagesURL = [...banner.images];
+
+  const deleteImagePromises = ImagesURL.map((url) => deleteOnCloudinary(url));
+
+  await Promise.all(deleteImagePromises);
+
   if (!banner) {
     throw new ApiError(404, "Hero banner not found");
   }
