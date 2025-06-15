@@ -3,6 +3,7 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import HeroBanner from "../models/heroBanner.model.js";
+import { MAX_HEROBANNER_IMAGES } from "../constant.js";
 
 const createHeroBanner = asyncHandler(async (req, res) => {
   const { title, subtitle, description, primaryCTA, secondaryCTA, isActive } =
@@ -23,8 +24,11 @@ const createHeroBanner = asyncHandler(async (req, res) => {
     throw new ApiError(400, "At least one product image is required");
   }
   const imageFiles = req.files;
-  if (imageFiles.length > 4) {
-    throw new ApiError(400, "Maximum 4 images are allowed");
+  if (imageFiles.length > MAX_HEROBANNER_IMAGES) {
+    throw new ApiError(
+      400,
+      `Maximum ${MAX_HEROBANNER_IMAGES} images are allowed`
+    );
   }
   const imageUploadPromises = imageFiles.map((file) =>
     uploadOnCloudinary(file.path)
@@ -68,8 +72,11 @@ const updateHeroBanner = asyncHandler(async (req, res) => {
   // Handle image updates if provided
   let imageURLs = [...banner.images];
   if (req.files && req.files.length > 0) {
-    if (req.files.length > 4) {
-      throw new ApiError(400, "Maximum 4 images are allowed");
+    if (req.files.length > MAX_HEROBANNER_IMAGES) {
+      throw new ApiError(
+        400,
+        `Maximum ${MAX_HEROBANNER_IMAGES} images are allowed`
+      );
     }
     const imageUploadPromises = req.files.map((file) => {
       uploadOnCloudinary(file.path);

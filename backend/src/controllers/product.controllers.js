@@ -5,6 +5,7 @@ import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import Product from "../models/product.model.js";
 import mongoose from "mongoose";
 import Category from "../models/category.model.js";
+import { MAX_PRODUCT_IMAGES } from "../constant.js";
 
 const createProduct = asyncHandler(async (req, res) => {
   const {
@@ -41,8 +42,8 @@ const createProduct = asyncHandler(async (req, res) => {
 
   const imageFiles = req.files;
 
-  if (imageFiles.length > 5) {
-    throw new ApiError(400, "Maximum 5 images are allowed");
+  if (imageFiles.length > MAX_PRODUCT_IMAGES) {
+    throw new ApiError(400, `Maximum ${MAX_PRODUCT_IMAGES} images are allowed`);
   }
 
   const imageUploadPromises = imageFiles.map((file) =>
@@ -107,8 +108,11 @@ const updateProduct = asyncHandler(async (req, res) => {
   // Handle image updates
   let newImageURLs = [...product.imageURLs];
   if (req.files && req.files.length > 0) {
-    if (req.files.length > 5) {
-      throw new ApiError(400, "Maximum 5 images are allowed");
+    if (req.files.length > MAX_PRODUCT_IMAGES) {
+      throw new ApiError(
+        400,
+        `Maximum ${MAX_PRODUCT_IMAGES} images are allowed`
+      );
     }
     const imageUploadPromises = req.files.map((file) =>
       uploadOnCloudinary(file.path)
